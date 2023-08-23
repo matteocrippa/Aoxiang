@@ -82,6 +82,9 @@ open class HTTPServer {
         }
         self.middleware.append(mid)
     }
+    
+    /// Returns if server has active sockets
+    public var hasConnections: Bool { !sockets.isEmpty }
 
     /// Socket instance
     private var socket: Socket?

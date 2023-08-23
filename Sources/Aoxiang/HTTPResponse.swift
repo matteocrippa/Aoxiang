@@ -72,6 +72,10 @@ public class HTTPResponse {
         let hexLength = String(content.count, radix: 16)
         try? socket.write(hexLength.description + "\r\n" + content + "\r\n")
     }
+    
+    public func write(_ data: Data) {
+        try? socket.write(data)
+    }
 
     /// Send string content to client, and close the connection.
     public func send(_ content: String) {
