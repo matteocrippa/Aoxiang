@@ -73,6 +73,13 @@ public class HTTPResponse {
         try? socket.write(hexLength.description + "\r\n" + content + "\r\n")
     }
     
+    /// Send data content to client.
+    ///
+    /// - Parameters:
+    ///     - data: data to be sent
+    ///
+    /// Note: This method will not close the connection,
+    ///       If you want to close the connection, call `end` method.
     public func write(_ data: Data) {
         try? socket.write(data)
     }
@@ -83,6 +90,14 @@ public class HTTPResponse {
         writeHeader()
 
         try? socket.write(content)
+        socket.close()
+    }
+    
+    /// Send data content to client, and close the connection.
+    public func send(_ data: Data) {
+        writeHeader()
+
+        try? socket.write(data)
         socket.close()
     }
 

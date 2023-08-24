@@ -48,6 +48,10 @@ final class AoxiangTests: XCTestCase {
         server.post("/postTest") { _, res in
             res.send("hello")
         }
+        
+        server.get("/data") { _, res in
+            res.send("data".data(using: .utf8)!)
+        }
 
         let indexRes = await fetch("/", method: "GET")
         XCTAssertEqual(indexRes, "Index")
@@ -55,6 +59,8 @@ final class AoxiangTests: XCTestCase {
         XCTAssertEqual(getRes, "hello")
         let postRes = await fetch("/postTest", method: "POST")
         XCTAssertEqual(postRes, "hello")
+        let data = await fetch("/data", method: "GET")
+        XCTAssertEqual(data, "data")
     }
 
     func testRquest() async throws {
@@ -98,6 +104,8 @@ final class AoxiangTests: XCTestCase {
         let res = await fetch("/stream")
         XCTAssertEqual(res, "hi,Aoxiang.")
     }
+    
+    // TODO: add tests
 
     func testSSE() async throws {
         server.get("/sse") { _, res in
